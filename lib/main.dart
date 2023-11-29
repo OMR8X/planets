@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:planets/classes/sounds_manager.dart';
 import 'package:planets/helpers/colors_h.dart';
 import 'package:planets/views/home_view.dart';
+import 'package:planets/views/splash_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           maximumSize: Size(MediaQuery.sizeOf(context).width - 50, 50),
         )),
       ),
-      home: const HomeView(),
+      home: const SplashView(),
     );
   }
 }

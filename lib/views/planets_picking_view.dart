@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:planets/classes/planet.dart';
 import 'package:planets/classes/sounds_manager.dart';
@@ -107,7 +108,6 @@ class _PlanetPickerWidgetState extends State<PlanetPickerWidget> {
     uranus,
     neptune,
   ];
-  bool playSound = false;
   @override
   void dispose() {
     controller.dispose();
@@ -127,18 +127,13 @@ class _PlanetPickerWidgetState extends State<PlanetPickerWidget> {
       controller: controller,
       itemCount: planets.length,
       onPageChanged: (value) {
-        playSound = true;
+        SoundsManager().pageChange();
         widget.onPickPlanet(planets[value]);
       },
       itemBuilder: (context, index) {
         return AnimatedBuilder(
           animation: controller,
           builder: (context, child) {
-            if (playSound) {
-              playSound = false;
-              SoundsManager().stopEffect();
-              SoundsManager().pageChange();
-            }
             double pageOffset = 0.0;
             if (controller.position.haveDimensions) {
               pageOffset = controller.page!;

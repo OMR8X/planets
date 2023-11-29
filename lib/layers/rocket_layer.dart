@@ -37,22 +37,26 @@ class _RocketLayerWidgetState extends State<RocketLayerWidget>
     initializeAnimation();
     initializeParticlesSpawner();
     controller.addStatusListener((status) {
+      // SoundsManager().stopRocket();
+      // SoundsManager().playRocket1();
       if (status == AnimationStatus.dismissed) {
         widget.onAnimationEnd();
+        SoundsManager().setRocketVolume(0.0);
       }
       if (status == AnimationStatus.forward) {
-        SoundsManager().stopRocket();
+        SoundsManager().setRocketVolume(0.85);
         SoundsManager().playRocket1();
       }
       if (status == AnimationStatus.reverse) {
-        SoundsManager().stopRocket();
+        SoundsManager().setRocketVolume(0.85);
         SoundsManager().playRocket1();
       }
+      if (status == AnimationStatus.completed) {}
     });
     super.initState();
   }
 
-  initializeParticlesSpawner() {
+  initializeParticlesSpawner() { 
     spawner = ParticlesSpawner(
       count: 20,
       speed: 1.0,
@@ -100,6 +104,10 @@ class _RocketLayerWidgetState extends State<RocketLayerWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (animation.value > 0) {
+      SoundsManager().setRocketVolume(0.85 - animation.value);
+    }
+
     return AnimatedBuilder(
         animation: controller,
         builder: (context, child) {

@@ -5,6 +5,9 @@ class ColorsHelper {
   static const Color greyDrk = Color(0xff0C0C0C);
 
   static const Color button = Color(0xff4A4458);
+  //
+  static const Color meteor1 = Color(0xff171717);
+  static const Color meteor2 = Color(0xff363636);
 
 static  particle(double d) {
     const Color particle1 = Color(0xffE03600);

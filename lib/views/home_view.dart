@@ -21,6 +21,12 @@ class _HomeViewState extends State<HomeView> {
   int animationDurationINSeconds = 6;
   bool fly = false;
   @override
+  void initState() {
+    SoundsManager().orchestra();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     size = MediaQuery.sizeOf(context);
     return Scaffold(

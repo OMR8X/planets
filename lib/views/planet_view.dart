@@ -29,6 +29,7 @@ class _PlanetViewState extends State<PlanetView> with TickerProviderStateMixin {
       begin: const Offset(0, 0.1),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
+    SoundsManager().stopEffect();
     super.initState();
   }
 

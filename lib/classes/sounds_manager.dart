@@ -15,39 +15,54 @@ class SoundsManager {
   late AudioPlayer spacePlayer;
   late AudioPlayer effectPlayer;
   late String currentSound;
+
   //
   init() {
+    rockerPlayer = AudioPlayer();
+    spacePlayer = AudioPlayer();
+    effectPlayer = AudioPlayer();
     backgroundPlayer = AudioPlayer()..setVolume(0.3);
     backgroundPlayer.onPlayerStateChanged.listen((event) {
       if (event == PlayerState.completed) {
         playBackground();
       }
     });
-    rockerPlayer = AudioPlayer();
-    spacePlayer = AudioPlayer();
-    effectPlayer = AudioPlayer();
+    rockerPlayer.onPlayerStateChanged.listen((event) {
+      if (event == PlayerState.completed) {
+        playRocket1();
+      }
+    });
+
     currentSound = "";
     playBackground();
   }
 
   stopBackGround() {
     currentSound = "";
-    backgroundPlayer.stop();
+    if (backgroundPlayer.state == PlayerState.playing) {
+      backgroundPlayer.stop();
+    }
   }
 
   stopRocket() {
     currentSound = "";
-    rockerPlayer.stop();
+    if (rockerPlayer.state == PlayerState.playing) {
+      rockerPlayer.stop();
+    }
   }
 
   stopSpace() {
     currentSound = "";
-    spacePlayer.stop();
+    if (spacePlayer.state == PlayerState.playing) {
+      spacePlayer.stop();
+    }
   }
 
   stopEffect() {
     currentSound = "";
-    effectPlayer.stop();
+    if (effectPlayer.state == PlayerState.playing) {
+      effectPlayer.stop();
+    }
   }
 
   playBackground() {
@@ -58,6 +73,7 @@ class SoundsManager {
     backgroundPlayer.play(
       AssetSource(SoundsAssetsPath.background),
     );
+    currentSound = "";
   }
 
   //
@@ -69,6 +85,7 @@ class SoundsManager {
     spacePlayer.play(
       AssetSource(SoundsAssetsPath.space1),
     );
+    currentSound = "";
   }
 
   playSpace2() {
@@ -79,6 +96,7 @@ class SoundsManager {
     spacePlayer.play(
       AssetSource(SoundsAssetsPath.space2),
     );
+    currentSound = "";
   }
 
   //
@@ -86,41 +104,20 @@ class SoundsManager {
     var name = "playRocket1";
     if (currentSound == name) return;
     currentSound = name;
-    rockerPlayer.stop();
+
     rockerPlayer.play(
-      AssetSource(SoundsAssetsPath.rocket1),
+      AssetSource(
+        SoundsAssetsPath.rocket1,
+      ),
+      volume: rockerPlayer.volume,
     );
+
+    currentSound = "";
   }
 
-  playRocket2() {
-    var name = "playRocket2";
-    if (currentSound == name) return;
-    currentSound = name;
-    rockerPlayer.stop();
-    rockerPlayer.play(
-      AssetSource(SoundsAssetsPath.rocket2),
-    );
-  }
-
-  playRocket3() {
-    var name = "playRocket3";
-    if (currentSound == name) return;
-    currentSound = name;
-    rockerPlayer.stop();
-    rockerPlayer.play(
-      AssetSource(SoundsAssetsPath.rocket3),
-    );
-  }
-
-  //
-  deepBass() {
-    var name = "deepBass";
-    if (currentSound == name) return;
-    currentSound = name;
-    effectPlayer.stop();
-    effectPlayer.play(
-      AssetSource(SoundsAssetsPath.deepBass),
-    );
+  setRocketVolume(double volume) {
+    print(volume);
+    rockerPlayer.setVolume(volume);
   }
 
   hit() {
@@ -131,6 +128,7 @@ class SoundsManager {
     effectPlayer.play(
       AssetSource(SoundsAssetsPath.hit),
     );
+    currentSound = "";
   }
 
   orchestra() {
@@ -138,19 +136,19 @@ class SoundsManager {
     if (currentSound == name) return;
     currentSound = name;
     effectPlayer.stop();
-    effectPlayer.play(
-      AssetSource(SoundsAssetsPath.orchestra),
-    );
+    effectPlayer.play(AssetSource(SoundsAssetsPath.orchestra), volume: 0.3);
+    currentSound = "";
   }
 
   pageChange() {
     var name = "pageChange";
     if (currentSound == name) return;
     currentSound = name;
-    effectPlayer.stop();
+    effectPlayer = AudioPlayer();
     effectPlayer.play(
       AssetSource(SoundsAssetsPath.pageChange),
       volume: 0.2,
     );
+    currentSound = "";
   }
 }
